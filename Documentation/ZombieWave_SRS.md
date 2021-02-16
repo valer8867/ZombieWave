@@ -23,19 +23,19 @@ ZombieWave - 2D шутер игра, целью которой является 
 ### 2.2 Интерфейс пользователя
 
 #### 2.2.1 Главное меню
-![](https://github.com/valer8867/ZombieWave/Documentation/Mockups/MainMenu.png)
+![](/Documentation/Mockups/MainMenu.png)
 
 #### 2.2.2 Одиночная игра
-![](https://github.com/valer8867/ZombieWave/Documentation/Mockups/Game.png)
+![](/Documentation/Mockups/Game.png)
 
 #### 2.2.3 Мультиплеер
-![](https://github.com/valer8867/ZombieWave/Documentation/Mockups/Multiplayer.png)
+![](/Documentation/Mockups/Multiplayer.png)
 
 #### 2.2.1 Результаты
-![](https://github.com/valer8867/ZombieWave/Documentation/Mockups/Results.png)
+![](/Documentation/Mockups/Results.png)
 
 #### 2.2.1 Опции
-![](https://github.com/valer8867/ZombieWave/Documentation/Mockups/Options.png)
+![](/Documentation/Mockups/Options.png)
 
 ## 3 Системные требования
 
