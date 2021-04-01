@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.1401
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZWMain", "ZWMain\ZWMain.vcxproj", "{A699C396-BD02-474A-A3AD-6217A5123CA0}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Shooter2D", "Shooter2D\Shooter2D.vcxproj", "{CC6552EC-1ABB-45D0-ABB4-5E88D99FB4B3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,14 @@ Global
 		{A699C396-BD02-474A-A3AD-6217A5123CA0}.Release|x64.Build.0 = Release|x64
 		{A699C396-BD02-474A-A3AD-6217A5123CA0}.Release|x86.ActiveCfg = Release|Win32
 		{A699C396-BD02-474A-A3AD-6217A5123CA0}.Release|x86.Build.0 = Release|Win32
+		{CC6552EC-1ABB-45D0-ABB4-5E88D99FB4B3}.Debug|x64.ActiveCfg = Debug|x64
+		{CC6552EC-1ABB-45D0-ABB4-5E88D99FB4B3}.Debug|x64.Build.0 = Debug|x64
+		{CC6552EC-1ABB-45D0-ABB4-5E88D99FB4B3}.Debug|x86.ActiveCfg = Debug|Win32
+		{CC6552EC-1ABB-45D0-ABB4-5E88D99FB4B3}.Debug|x86.Build.0 = Debug|Win32
+		{CC6552EC-1ABB-45D0-ABB4-5E88D99FB4B3}.Release|x64.ActiveCfg = Release|x64
+		{CC6552EC-1ABB-45D0-ABB4-5E88D99FB4B3}.Release|x64.Build.0 = Release|x64
+		{CC6552EC-1ABB-45D0-ABB4-5E88D99FB4B3}.Release|x86.ActiveCfg = Release|Win32
+		{CC6552EC-1ABB-45D0-ABB4-5E88D99FB4B3}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

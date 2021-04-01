@@ -6,6 +6,7 @@
 #include <condition_variable>
 #include <atomic>
 #include <array>
+#include <unordered_map>
 
 enum class PlayerControls;
 class IO;
