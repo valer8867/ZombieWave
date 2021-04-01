@@ -29,7 +29,7 @@ ZombieWave - 2D шутер игра, целью которой является 
 ![](/Documentation/Mockups/Game.png)
 
 #### 2.2.3 Мультиплеер
-![](/Documentation/Mockups/Multiplayer.png)
+![](/Documentation/Mockups/Mulitlayer.png)
 
 #### 2.2.1 Результаты
 ![](/Documentation/Mockups/Results.png)
