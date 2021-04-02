@@ -110,7 +110,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\SFML\lib;</AdditionalLibraryDirectories>
-      <AdditionalDependencies>gdi32.lib;winmm.lib;freetype.lib;opengl32.lib;sfml-system-s.lib;sfml-window-s.lib;sfml-graphics-s.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ogg.lib;vorbis.lib;vorbisfile.lib;vorbisenc.lib;flac.lib;openal32.lib;sfml-audio-s.lib;gdi32.lib;winmm.lib;freetype.lib;opengl32.lib;sfml-system-s.lib;sfml-window-s.lib;sfml-graphics-s.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -129,6 +129,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\SoundEffects.cpp" />
     <ClCompile Include="Source\AnimatedObject.cpp" />
     <ClCompile Include="Source\Border.cpp" />
     <ClCompile Include="Source\Enemies.cpp" />
@@ -147,6 +148,7 @@
     <ClCompile Include="Source\Shot.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\SoundEffects.h" />
     <ClInclude Include="Source\AnimatedObject.h" />
     <ClInclude Include="Source\Border.h" />
     <ClInclude Include="Source\Enemies.h" />

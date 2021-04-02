@@ -63,6 +63,9 @@
     <ClCompile Include="Source\GameResultLoader.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="Source\SoundEffects.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\IO.h">
@@ -111,6 +114,9 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="Source\GameResutlLoader.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SoundEffects.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

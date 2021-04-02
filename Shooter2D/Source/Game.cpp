@@ -3,13 +3,13 @@
 #include "IO.h"
 #include "Player.h"
 #include "GameInfo.h"
+#include "SoundEffects.h"
 
 #include <SFML/Graphics.hpp>
 #include <thread>
 #include <unordered_map>
 
-#include <iostream>	//for debugging
-
+#define PATH_TO_MUSIC "Resources/Sound/backgroundMusic.wav"
 
 const std::array<sf::Keyboard::Key, NumbOfPlayerControls> FirstPlayerKeys = 
 {
@@ -55,13 +55,24 @@ const std::string SecondPlayerKeysStr[NumbOfPlayerControls] =
 };
 
 Game::Game(IO* io_)
-	: state(),
+	: pMusic(new sf::Music),
+	  state(),
 	  mutex(),
 	  io(io_),
 	  activeContext(false),
 	  gameOver(false), pause(false), finished(false), shouldSave(false), decisionToSave(false),
-	  dT(sf::seconds(1/60.0f))
-{ }
+	dT(sf::seconds(1 / 60.0f))
+{ 
+	pMusic->openFromFile(PATH_TO_MUSIC);
+	pMusic->setLoop(true);
+	pMusic->play();
+}
+
+Game::~Game()
+{
+	delete pMusic;
+}
+
 
 std::thread Game::startOnePGame()
 {
@@ -135,6 +146,9 @@ void Game::onePGameLoop(std::shared_ptr<Player> pPlayer, std::shared_ptr<Level> 
 		io->display();
 	}
 
+	pMusic->stop();
+	SoundEffects::instance().losingSound();
+
 	{
 		std::scoped_lock lock(mutex);
 
@@ -193,6 +207,9 @@ void Game::twoPGameLoop(std::shared_ptr<Player> pFirstPlayer, std::shared_ptr<Pl
 
 		io->display();
 	}
+
+	pMusic->stop();
+	SoundEffects::instance().losingSound();
 
 	{
 		std::scoped_lock lock(mutex);

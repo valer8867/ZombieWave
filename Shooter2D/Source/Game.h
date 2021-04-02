@@ -3,6 +3,7 @@
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/System/Clock.hpp>
+#include <SFML/Audio.hpp>
 #include <condition_variable>
 #include <atomic>
 #include <array>
@@ -32,6 +33,7 @@ class Game
 {
 public:
 	Game(IO* io_);
+	~Game();
 
 	void finishGame();
 	std::thread startOnePGame();
@@ -47,6 +49,7 @@ private:
 	void twoPGameLoop(std::shared_ptr<Player> pFirstPlayer, std::shared_ptr<Player> pSecondPlayer, std::shared_ptr<Level> pLevel, std::shared_ptr<GameInfo> pGameInfo);
 
 private:
+	sf::Music* pMusic;
 	std::condition_variable state;
 	std::mutex mutex;
 	IO* io;

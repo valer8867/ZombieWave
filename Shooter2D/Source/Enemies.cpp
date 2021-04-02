@@ -2,6 +2,7 @@
 #include "Shot.h"
 #include "IO.h"
 #include "Factory.h"
+#include "SoundEffects.h"
 
 Enemy::Enemy(const sf::Texture* const pTexture, const sf::Vector2f& pos, unsigned char health)
 	: AnimatedObject(pTexture, pos),
@@ -67,6 +68,7 @@ bool Enemy::hit(const Shot& shot)
 
 		if (hp <= 0)
 		{
+			SoundEffects::instance().hitSound();
 			currentFrame = maxFrame();
 			alive = false;
 		}
