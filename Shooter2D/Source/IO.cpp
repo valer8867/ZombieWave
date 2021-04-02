@@ -62,20 +62,24 @@ void IO::start()
 					CURRENT_SCENE_PTR(scenes, currentScene)->textEntered(static_cast<char>(event.text.unicode));
 				}
 			}
-
-			if (!pGame || gameOnPause)
+			if (event.type == sf::Event::LostFocus)
 			{
-				drawCurrentScene();
+				if (pGame) pauseGame();
 			}
-			else
-			{
-				if (pGame->isGameFinished())
-				{
-					createGameSavingScene();
-					setActiveContext(true);
-					currentScene = Scenes::SAVE_GAME_SCENE;
-					drawCurrentScene();
-				}
+		}
+
+		if (!pGame || gameOnPause)
+		{
+			drawCurrentScene();
+		}
+		else
+		{
+			if (pGame->isGameFinished())
+			{			
+				createGameSavingScene();
+				setActiveContext(true);
+				currentScene = Scenes::SAVE_GAME_SCENE;
+				drawCurrentScene();
 			}
 		}
 	}

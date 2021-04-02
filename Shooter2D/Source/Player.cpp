@@ -141,7 +141,7 @@ int Player::height() const
 
 float Player::speed() const
 {
-	return 0.08f;
+	return 0.12f;
 }
 
 float Player::frameChangeSpeed() const

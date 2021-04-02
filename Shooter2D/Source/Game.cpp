@@ -60,7 +60,8 @@ Game::Game(IO* io_)
 	  mutex(),
 	  io(io_),
 	  activeContext(false),
-	  gameOver(false), pause(false), finished(false), shouldSave(false), decisionToSave(false)
+	  gameOver(false), pause(false), finished(false), shouldSave(false), decisionToSave(false),
+	dT(sf::seconds(1 / 60.0f))
 { 
 	pMusic->openFromFile(PATH_TO_MUSIC);
 	pMusic->setLoop(true);
@@ -71,6 +72,7 @@ Game::~Game()
 {
 	delete pMusic;
 }
+
 
 std::thread Game::startOnePGame()
 {
@@ -103,12 +105,13 @@ void Game::onePGameLoop(std::shared_ptr<Player> pPlayer, std::shared_ptr<Level> 
 	activeContext = true;
 
 	sf::Clock clock;
+	sf::Time timeAcc = sf::Time::Zero;
 	gameOver = false;
 	pause = false;
 
 	while (!gameOver)
 	{
-		float elapsedTime = static_cast<float>(clock.restart().asMilliseconds()); 
+		timeAcc += clock.restart();
 
 		checkForPause(clock); // if the game was on pause, the clock will be restarted in that function
 		if (finished)
@@ -116,16 +119,21 @@ void Game::onePGameLoop(std::shared_ptr<Player> pPlayer, std::shared_ptr<Level> 
 			break;
 		}
 
-		pPlayer->move(elapsedTime);
-
-		if (pPlayer->fire())
+		if(timeAcc > dT)
 		{
-			pLevel->addShot(pPlayer->getShotPosition(), pPlayer.get(), pPlayer->damage());
-		}
+			timeAcc -= dT;
 
-		if (!pLevel->update(elapsedTime))
-		{
-			break;
+			pPlayer->move(dT.asMilliseconds());
+
+			if (pPlayer->fire())
+			{
+				pLevel->addShot(pPlayer->getShotPosition(), pPlayer.get(), pPlayer->damage());
+			}
+
+			if (!pLevel->update(dT.asMilliseconds()))
+			{
+				break;
+			}
 		}
 
 		io->clearWindow();
