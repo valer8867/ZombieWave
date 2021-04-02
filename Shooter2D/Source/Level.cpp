@@ -101,6 +101,22 @@ void Level::enemiesDeleter(std::list<Enemy*>* pEnemies)
 
 void Level::generateEnemies()
 {
+// #define STRESS_TEST 
+// for stress testing
+#ifdef STRESS_TEST
+	constexpr uint8_t numberOfEnemies = 100;
+
+	if (pWave->clock.getElapsedTime().asMilliseconds() >= pWave->generationDelay)
+	{
+		for (int i = 0; i < numberOfEnemies; i++)
+		{
+			pEnemies->emplace_back(pEnemiesFactory->createEnemy());
+			pWave->clock.restart();
+		}
+
+		pWave->currentEnemiesCount += numberOfEnemies;
+	}
+#else
 	if (pWave->enemiesKilled == pWave->waveOverallEnemiesCount)
 	{
 		if (!(++pWave->wave % 5))
@@ -129,6 +145,7 @@ void Level::generateEnemies()
 		pWave->currentEnemiesCount++;
 		pWave->clock.restart();
 	}
+#endif
 }
 
 void Level::createHitEffect(Shot* pShot)
