@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "IO.h"
 #include "GameInfo.h"
+#include "SoundEffects.h"
 
 #include <algorithm>
 #include <random>
@@ -79,6 +80,7 @@ void Level::updateShots(float time)
 
 void Level::addShot(const sf::Vector2f& position, Player* pPlayer, unsigned char damage)
 {
+	SoundEffects::instance().shotSound();
 	pShots->emplace_back(position, pPlayer, damage);
 }
 
