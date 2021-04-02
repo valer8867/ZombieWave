@@ -62,9 +62,10 @@ void IO::start()
 					CURRENT_SCENE_PTR(scenes, currentScene)->textEntered(static_cast<char>(event.text.unicode));
 				}
 			}
-
-			//TODO - add pause on window unfocus
-
+			if (event.type == sf::Event::LostFocus)
+			{
+				if (pGame) pauseGame();
+			}
 		}
 
 		if (!pGame || gameOnPause)
