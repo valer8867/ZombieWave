@@ -28,22 +28,16 @@ ShootingControl::ShootingControl(const sf::Vector2f& position, std::shared_ptr<G
 void ShootingControl::initGuns()
 {
 	sf::Int32 reloadingTime = 2000;
-	sf::Int32 delay = 1000;
-	unsigned int price = 500; 
+	sf::Int32 delay = 800;
+	unsigned int price = 0; 
 	unsigned char numberOfShots = 8;
 	unsigned char damage = 1;
+	guns.emplace_back(2000, delay, 0, 8, 1);
+	guns.emplace_back(2000, 400, 1000, 16, 1);
+	guns.emplace_back(2000, 200, 5000, 24, 2);
+	guns.emplace_back(1500, 100, 10000, 32, 2);
+	guns.emplace_back(1250, 50, 15000, 48, 3);
 
-	for (int i = 0; i < GunsNumber; i++)
-	{
-		guns.emplace_back(reloadingTime, delay, price, numberOfShots, damage);
-		reloadingTime += 500;
-		price +=500;
-		numberOfShots += 4;
-		delay -= 100;
-		damage++;
-	}
-
-	guns[0].price = 0;
 }
 
 void ShootingControl::initText(sf::Text* pText, const sf::Font* pFont, const sf::Color& color, const std::string& string, unsigned int characterSize)

@@ -104,7 +104,7 @@ void Level::generateEnemies()
 // #define STRESS_TEST 
 // for stress testing
 #ifdef STRESS_TEST
-	constexpr uint8_t numberOfEnemies = 100;
+	constexpr uint8_t numberOfEnemies = 1000;
 
 	if (pWave->clock.getElapsedTime().asMilliseconds() >= pWave->generationDelay)
 	{
@@ -117,25 +117,30 @@ void Level::generateEnemies()
 		pWave->currentEnemiesCount += numberOfEnemies;
 	}
 #else
+
 	if (pWave->enemiesKilled == pWave->waveOverallEnemiesCount)
 	{
 		if (!(++pWave->wave % 5))
 		{
-			pWave->minEnemiesCount++;
+			pWave->minEnemiesCount += 3;
 			pEnemiesFactory->increseAllowedEnemiesTypes();
 		}
 
 		pWave->enemiesKilled = 0;
-		pWave->waveOverallEnemiesCount++;
+		pWave->waveOverallEnemiesCount += pWave->wave;
 		pGameInfo->incWave();
 
-		pWave->generationDelay -= pWave->GenerationDelayDec;
+		pWave->generationDelay -= pWave->generationDelay / 10;
 		if (pWave->generationDelay < pWave->GenerationDelayLimit)
 		{
 			pWave->generationDelay = pWave->GenerationDelayLimit;
 		}
 	}
 	
+	if (pWave->wave == 13) {
+		pWave->minEnemiesCount += 10;
+	}
+
 	if ((pWave->clock.getElapsedTime().asMilliseconds() >= pWave->generationDelay &&
 		pWave->currentEnemiesCount + pWave->enemiesKilled < pWave->waveOverallEnemiesCount) ||
 		(pWave->currentEnemiesCount < pWave->minEnemiesCount &&

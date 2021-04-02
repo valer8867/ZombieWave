@@ -51,7 +51,7 @@ private:
 	{
 		sf::Clock clock;
 		const sf::Int32 GenerationDelayDec = 100;
-		const sf::Int32 GenerationDelayLimit = 2000;
+		const sf::Int32 GenerationDelayLimit = 200;
 		sf::Int32 generationDelay = 5000;
 		unsigned short wave = 0;
 		unsigned short enemiesKilled = 0;
