@@ -60,4 +60,5 @@ private:
 	bool finished;
 	bool shouldSave;
 	bool decisionToSave;
+	const sf::Time dT;
 };
