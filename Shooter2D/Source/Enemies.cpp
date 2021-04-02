@@ -191,7 +191,7 @@ float DiagonalMovingEnemy::maxFrame() const
 }
 
 JumpingEnemy::JumpingEnemy(const sf::Vector2f& pos)
-	: Enemy(TextureFactory::getInstance().loadFromFile("Resources/Images/enemie3.png"), pos, 10),
+	: Enemy(TextureFactory::getInstance().loadFromFile("Resources/Images/enemie3.png"), pos, 15),
 	  timer(),
 	  onGround(false)
 {
@@ -288,7 +288,7 @@ float JumpingEnemy::maxFrame() const
 }
 
 StrongEnemy::StrongEnemy(const sf::Vector2f& pos)
-	: Enemy(TextureFactory::getInstance().loadFromFile("Resources/Images/enemie4.png"), pos, 15)
+	: Enemy(TextureFactory::getInstance().loadFromFile("Resources/Images/enemie4.png"), pos, 25)
 {
 	init();
 }
@@ -306,8 +306,8 @@ float StrongEnemy::maxFrame() const
 int WeakEnemy::width()                 const { return 27; }
 int WeakEnemy::height()                const { return 42; }
 unsigned int WeakEnemy::moneyForHit()  const { return 10; }
-float WeakEnemy::speed()               const { return 0.06f; }
 float WeakEnemy::frameChangeSpeed()    const { return 0.015f; }
+float WeakEnemy::speed()               const { return 0.06f; }
 
 int DiagonalMovingEnemy::width()                 const { return 27; }
 int DiagonalMovingEnemy::height()                const { return 42; }
@@ -323,6 +323,6 @@ float JumpingEnemy::speed()			      const { return 0.08f; }
 int StrongEnemy::width()                 const { return 90; }
 int StrongEnemy::height()                const { return 63; }
 unsigned int StrongEnemy::moneyForHit()  const { return 30; }
-float StrongEnemy::speed()               const { return 0.05f; }
 float StrongEnemy::frameChangeSpeed()    const { return 0.015f; }
+float StrongEnemy::speed()               const { return 0.13f; }
 
