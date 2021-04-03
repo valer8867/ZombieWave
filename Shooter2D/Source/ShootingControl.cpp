@@ -2,6 +2,8 @@
 #include "GameInfo.h"
 #include "Factory.h"
 
+extern bool STRESS_TEST;
+
 ShootingControl::ShootingControl(const sf::Vector2f& position, std::shared_ptr<GameInfo> pGi)
 	: pGameInfo(pGi),
 	  guns(),
@@ -32,7 +34,12 @@ void ShootingControl::initGuns()
 	unsigned int price = 0; 
 	unsigned char numberOfShots = 8;
 	unsigned char damage = 1;
-	guns.emplace_back(2000, delay, 0, 8, 1);
+	if (STRESS_TEST) {
+		guns.emplace_back(1, 1, 0, 10000, 1000);
+	}
+	else {
+		guns.emplace_back(2000, delay, 0, 8, 1);
+	}
 	guns.emplace_back(2000, 400, 1000, 16, 1);
 	guns.emplace_back(2000, 200, 5000, 24, 2);
 	guns.emplace_back(1500, 100, 10000, 32, 2);
