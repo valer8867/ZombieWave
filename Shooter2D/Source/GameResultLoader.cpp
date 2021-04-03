@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <filesystem>
 #include <thread>
+#include <sstream>
 
 bool GameResultLoader::changed = false;
 
