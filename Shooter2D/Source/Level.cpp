@@ -107,6 +107,9 @@ void Level::generateEnemies()
 // for stress testing
 	if (STRESS_TEST) {
 		constexpr uint8_t numberOfEnemies = 10;
+		pEnemiesFactory->increseAllowedEnemiesTypes();
+		pEnemiesFactory->increseAllowedEnemiesTypes();
+		pEnemiesFactory->increseAllowedEnemiesTypes();
 		pWave->generationDelay = 200;
 		if (pWave->clock.getElapsedTime().asMilliseconds() >= pWave->generationDelay)
 		{
@@ -234,7 +237,8 @@ unsigned char Level::EnemiesFactory::getRandomEnemyType()
 {
 	std::random_device rd;
 	std::mt19937 generator(rd());
-	std::uniform_int_distribution<std::mt19937::result_type> dist(0, enemiesTypesAllowed);
+	//std::uniform_int_distribution<std::mt19937::result_type> dist(0, enemiesTypesAllowed);
+	std::geometric_distribution<> gd(0.63f);
 
-	return dist(generator);
+	return gd(generator) % (enemiesTypesAllowed + 1);
 }
