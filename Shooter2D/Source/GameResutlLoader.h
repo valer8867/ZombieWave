@@ -30,7 +30,7 @@ public:
 
 private:
 	static void storeResultImpl(const std::string& gameName, unsigned short wave, unsigned short enemiesKilled);
-	static std::fstream& readResult(std::fstream& file, GameResult& result);
+	static bool readResult(std::fstream& file, GameResult& result);
 	static std::fstream& writeResult(std::fstream& file, GameResult& result);
 	static void createIfUnexisting();
 
