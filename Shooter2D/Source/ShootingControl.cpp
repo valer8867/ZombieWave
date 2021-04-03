@@ -38,9 +38,9 @@ void ShootingControl::initGuns()
 		guns.emplace_back(1, 1, 0, 10000, 1000);
 	}
 	else {
-		guns.emplace_back(2000, delay, 0, 8, 1);
+		guns.emplace_back(2000, 800, 0, 8, 1);
 	}
-	guns.emplace_back(2000, 400, 1000, 16, 1);
+	guns.emplace_back(1500, 400, 1000, 16, 1);
 	guns.emplace_back(2000, 200, 5000, 24, 2);
 	guns.emplace_back(1500, 100, 10000, 32, 2);
 	guns.emplace_back(1250, 50, 15000, 48, 3);
