@@ -65,7 +65,7 @@ void IO::start()
 			}
 			if (event.type == sf::Event::LostFocus)
 			{
-				if (pGame) pauseGame();
+				if (pGame && !gameOnPause) pauseGame();
 			}
 		}
 
