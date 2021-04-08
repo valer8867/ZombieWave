@@ -23,7 +23,7 @@ public:
 	void up();
 	void down();
 	void onClick();
-	void textEntered(sf::Uint32 c);
+	void textEntered(char c);
 	void setPosition(float x, float y);
 	void setFontSize(unsigned char size);
 	void setTextureCoord(float x, float y);
@@ -36,10 +36,8 @@ public:
 	void createConstTextLines(std::size_t linesNumber);
 	void setButtonWidth(std::size_t indx, std::size_t width);
 	void setTextLineStr(std::size_t indx, const std::string& text);
-	void initButton(const sf::String& text, std::function<void(void)> function, std::size_t indx);
+	void initButton(const std::string& text, std::function<void(void)> function, std::size_t indx);
 	void setButtonsSize(std::size_t width = DefaultButtonWidth, std::size_t height = DefaultButtonHeight);
-	void setButtonPos(int btnIndex, float offsX, float offsY);	//Offset from upper-left corner of window?
-	void setTextOffsetInButton(int btnIndex, float offsX, float offsY);
 
 private:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
@@ -61,11 +59,6 @@ private:
 private:
 	struct Button
 	{
-	protected:
-		sf::Font* buttonFont;
-	public:
-		Button();
-
 		sf::Text* pText;
 		Rectangle* pRectnagle;
 		std::function<void(void)> onClickFunction;
@@ -75,7 +68,7 @@ private:
 
 	struct TextLine : Button
 	{
-		void addSymbol(sf::Uint32 c);
+		void addSymbol(char c);
 	};
 	
 	void setButtonTextPosition(Button* pButtton);

@@ -132,7 +132,7 @@ void Menu::removeButtonBorder(std::size_t buttonIndx)
 	buttons[buttonIndx]->pRectnagle->removeBorder();
 }
 
-void Menu::initButton(const sf::String& text, std::function<void(void)> function, std::size_t indx)
+void Menu::initButton(const std::string& text, std::function<void(void)> function, std::size_t indx)
 {
 	Button* pButton = buttons[indx];
 
@@ -234,35 +234,25 @@ void Menu::moveIndicator()
 	pCurrButtonIndicator->setPosition(curButtonPos.x - 3.0f * radius, curButtonPos.y + static_cast<float>(buttonHeight) * 0.5f - radius);
 }
 
-Menu::Button::Button()
-{
-	//idk if need to include font here...
-	buttonFont = new sf::Font;
-	buttonFont->loadFromFile("Resources/Fonts/arial.ttf");		//Good enough.
-}
-
 Menu::Button::~Button()
 {
-	delete buttonFont;
 	delete pText;
 	delete pRectnagle;
 }
 
-void Menu::TextLine::addSymbol(sf::Uint32 c)
+void Menu::TextLine::addSymbol(char c)
 {
-	sf::String text = pText->getString();
-	pText->setFont(*buttonFont);	//testing. Doesn't work i think...
-	std::string dummy = text;
+	std::string text = pText->getString();
 
-	if (c == '\b' && !text.isEmpty())
+	if (c == '\b' && !text.empty())
 	{
-		text.erase(text.getSize() - 1, 1);
+		text.erase(--text.end());
 	}
-	else if (c >= 0x20)
+	else
 	{
 		text += c;
 	}
-	
+
 	pText->setString(text);
 
 	while (pText->getLocalBounds().width >= pRectnagle->getWidth() && pText->getCharacterSize())
@@ -276,7 +266,7 @@ void Menu::createTextLines(std::size_t linesNumber)
 	createMenuObjects<TextLine>(linesNumber);
 }
 
-void Menu::textEntered(sf::Uint32 c)
+void Menu::textEntered(char c)
 {
 	if (buttons.empty()) return;
 
@@ -333,20 +323,4 @@ void Menu::createConstTextLines(std::size_t linesNumber)
 
 		createMenuObjectsImpl<TextLine>(linesNumber);
 	}
-}
-
-void Menu::setButtonPos(int btnIndex, float offsX, float offsY)
-{
-	if (btnIndex >= buttons.size() || btnIndex < 0) return;
-
-	buttons[btnIndex]->pRectnagle->setPosition(offsX, offsY);
-	//buttons[btnIndex]->pText->setPosition(offsX, offsY);
-	setButtonTextPosition(buttons[btnIndex]);
-}
-
-void Menu::setTextOffsetInButton(int btnIndex, float offsX, float offsY)
-{
-	if (btnIndex >= buttons.size() || btnIndex < 0) return;
-
-	buttons[btnIndex]->pText->setPosition(buttons[btnIndex]->pRectnagle->getPosition() + sf::Vector2f{offsX, offsY});
 }
