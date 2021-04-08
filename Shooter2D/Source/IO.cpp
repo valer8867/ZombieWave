@@ -46,7 +46,7 @@ void IO::start()
 			{
 				if (event.key.code == sf::Keyboard::Key::Escape)
 				{
-					if (pGame) pauseGame();
+					if (pGame && currentScene != Scenes::SAVE_GAME_SCENE) pauseGame();
 					else       currentScene = Scenes::MAIN_SCENE;											
 				}
 				else if (!pGame || gameOnPause || pGame->isGameFinished())
@@ -58,10 +58,8 @@ void IO::start()
 			}
 			else if (event.type == sf::Event::TextEntered && (!pGame || pGame->isGameFinished()))
 			{
-				if (event.text.unicode < 128)
-				{
-					CURRENT_SCENE_PTR(scenes, currentScene)->textEntered(static_cast<char>(event.text.unicode));
-				}
+				if(event.text.unicode >= 0x20 || event.text.unicode == '\b')
+					CURRENT_SCENE_PTR(scenes, currentScene)->textEntered(event.text.unicode);
 			}
 			if (event.type == sf::Event::LostFocus)
 			{
@@ -191,6 +189,9 @@ void IO::createGameSavingScene()
 		SAVE_GAME_SCENE_PTR(scenes)->createTextLines(1);
 		SAVE_GAME_SCENE_PTR(scenes)->createButtons(2);
 		SAVE_GAME_SCENE_PTR(scenes)->initButton("Enter game name for saving", [] {}, 0);
+
+		
+
 		SAVE_GAME_SCENE_PTR(scenes)->initButton("Save", std::bind(&IO::saveFinishedGame, this, true), 1);
 		SAVE_GAME_SCENE_PTR(scenes)->initButton("Do not save", std::bind(&IO::saveFinishedGame, this, false), 2);
 
@@ -218,7 +219,7 @@ void IO::createStatsScene()
 		{
 			GameResultLoader::GameResult& result = gameResults[i];
 
-			STATS_SCENE_PTR(scenes)->initButton(std::to_string(i + 1) + "." + result.name +
+			STATS_SCENE_PTR(scenes)->initButton(std::to_string(i + 1) + "." + result.name +		//Might convert name to regular string - need to check!
 				" Wave: " + std::to_string(result.wave) + " Enemies Killed: " + std::to_string(result.enemiesKilled), [] {}, i);
 			STATS_SCENE_PTR(scenes)->removeButtonBorder(i);
 		}
@@ -234,29 +235,47 @@ void IO::createHelpScene()
 	{
 		createFullWindowSizeScene(&HELP_SCENE_PTR(scenes));
 
-		HELP_SCENE_PTR(scenes)->setButtonsSize(700, 28);
+		const int buttonWidth = 300;
+		const int buttonHeight = 30;
+		const int buttonGap = 3;
+		const int offsetFirstCol = pWindow->getSize().x / 2 - buttonWidth - buttonGap;
+		const int offsetSecondCol = pWindow->getSize().x / 2 + buttonGap;
+		const int rectTotal = (NumbOfPlayerControls + 1) * 2;
+
+		HELP_SCENE_PTR(scenes)->setButtonsSize(buttonWidth, buttonHeight);
 		HELP_SCENE_PTR(scenes)->setFontSize(20);
+		HELP_SCENE_PTR(scenes)->createConstTextLines(rectTotal);
 
-		constexpr std::size_t NumbOfTextLines = NumbOfPlayerControls * 2 + 1;
-		HELP_SCENE_PTR(scenes)->createConstTextLines(NumbOfTextLines);
-		HELP_SCENE_PTR(scenes)->createButtons(1);
+		HELP_SCENE_PTR(scenes)->initButton("Player 1:", [] {}, 0);
+		HELP_SCENE_PTR(scenes)->setButtonPos(0, offsetFirstCol, 0);
+		HELP_SCENE_PTR(scenes)->initButton("Player 2:", [] {}, 1);
+		HELP_SCENE_PTR(scenes)->setButtonPos(1, offsetSecondCol, 0);
 
-		for (std::size_t i = 0; i < 2; i++)
+		for (size_t i = 2; i < NumbOfPlayerControls + 2; i++)
 		{
-			const std::string* pKeysStr = i ? SecondPlayerKeysStr : FirstPlayerKeysStr;
-			const std::string player = i ? "Second Player " : "First Player ";
+			HELP_SCENE_PTR(scenes)->initButton(FirstPlayerKeysStr[i - 2], [] {}, i);
+			HELP_SCENE_PTR(scenes)->removeButtonBorder(i);
+			HELP_SCENE_PTR(scenes)->setButtonPos(i, offsetFirstCol, (buttonHeight + buttonGap) * (i - 1));
 
-			for (std::size_t j = 0; j < NumbOfPlayerControls; j++)
-			{
-				HELP_SCENE_PTR(scenes)->initButton(player + pKeysStr[j], [] {}, i * NumbOfPlayerControls + j);
-				HELP_SCENE_PTR(scenes)->removeButtonBorder(i * NumbOfPlayerControls + j);
-			}
+			HELP_SCENE_PTR(scenes)->initButton(SecondPlayerKeysStr[i - 2], [] {}, i + NumbOfPlayerControls);
+			HELP_SCENE_PTR(scenes)->removeButtonBorder(i + NumbOfPlayerControls);
+			HELP_SCENE_PTR(scenes)->setButtonPos(i + NumbOfPlayerControls, offsetSecondCol, (buttonHeight + buttonGap) * (i - 1));
 		}
+	
 
-		HELP_SCENE_PTR(scenes)->initButton("Pause/Back: ESCAPE", [] {}, NumbOfTextLines - 1);
-		HELP_SCENE_PTR(scenes)->removeButtonBorder(NumbOfTextLines - 1);
-		HELP_SCENE_PTR(scenes)->initButton("Main menu", [this] { currentScene = Scenes::MAIN_SCENE; }, NumbOfTextLines);
-		HELP_SCENE_PTR(scenes)->setButtonWidth(NumbOfTextLines, 300);
+		//HELP_SCENE_PTR(scenes)->setButtonPos(1, 20, 30);
+		//HELP_SCENE_PTR(scenes)->setButtonWidth(1, 200);
+		//HELP_SCENE_PTR(scenes)->setTextOffsetInButton(1, 5, 5);
+
+						//end of test section
+		
+
+
+
+		//HELP_SCENE_PTR(scenes)->initButton("Pause/Back: ESCAPE", [] {}, rectTotal - 1);
+		//HELP_SCENE_PTR(scenes)->removeButtonBorder(rectTotal - 1);
+		//HELP_SCENE_PTR(scenes)->initButton("Main menu", [this] { currentScene = Scenes::MAIN_SCENE; }, rectTotal - 1);
+		//HELP_SCENE_PTR(scenes)->setButtonWidth(rectTotal, 300);
 	}
 }
 
