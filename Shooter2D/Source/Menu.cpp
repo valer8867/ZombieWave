@@ -285,6 +285,9 @@ void Menu::textEntered(sf::Uint32 c)
 
 	if (pTextLine && !isIndicatorOnConstTextLine())
 	{
+		if (pTextLine->pText->getString() == "Enter game name for saving") {
+			pTextLine->pText->setString("");
+		}
 		pTextLine->addSymbol(c);
 		setButtonTextPosition(pTextLine);
 	}
