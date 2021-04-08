@@ -8,6 +8,7 @@
 #include <SFML/Graphics.hpp>
 #include <thread>
 #include <unordered_map>
+#include <mutex>
 
 #define PATH_TO_MUSIC "Resources/Sound/backgroundMusic.wav"
 
