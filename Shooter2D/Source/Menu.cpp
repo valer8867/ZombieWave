@@ -13,7 +13,9 @@ Menu::Menu(int width, int height, const sf::Vector2f& position, float indicatorR
 	  buttonWidth(DefaultButtonWidth),
 	  buttonHeight(DefaultButtonHeight),
 	  fontSize(ButtontFontSize)
-{ }
+{
+
+}
 
 Menu::~Menu()
 {
@@ -250,9 +252,15 @@ Menu::Button::~Button()
 
 void Menu::TextLine::addSymbol(sf::Uint32 c)
 {
+	if (initialMsgActive)
+	{
+		initialMsgActive = false;
+		pText->setString("");
+	}
+
 	sf::String text = pText->getString();
+	
 	pText->setFont(*buttonFont);	//testing. Doesn't work i think...
-	std::string dummy = text;
 
 	if (c == '\b' && !text.isEmpty())
 	{
