@@ -46,8 +46,10 @@ void IO::start()
 			{
 				if (event.key.code == sf::Keyboard::Key::Escape)
 				{
-					if (pGame && currentScene != Scenes::SAVE_GAME_SCENE) pauseGame();
-					else       currentScene = Scenes::MAIN_SCENE;											
+					if (pGame)
+						pauseGame();
+					else      
+						currentScene = Scenes::MAIN_SCENE;											
 				}
 				else if (!pGame || gameOnPause || pGame->isGameFinished())
 				{
