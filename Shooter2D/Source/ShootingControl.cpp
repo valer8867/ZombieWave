@@ -29,7 +29,7 @@ void ShootingControl::initGuns()
 {
 	sf::Int32 reloadingTime = 2000;
 	sf::Int32 delay = 1000;
-	unsigned int price = 500; 
+	unsigned int price = 500;
 	unsigned char numberOfShots = 8;
 	unsigned char damage = 1;
 
@@ -37,7 +37,7 @@ void ShootingControl::initGuns()
 	{
 		guns.emplace_back(reloadingTime, delay, price, numberOfShots, damage);
 		reloadingTime += 500;
-		price +=500;
+		price += 500;
 		numberOfShots += 4;
 		delay -= 100;
 		damage++;
