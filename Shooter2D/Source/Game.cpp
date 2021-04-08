@@ -119,7 +119,7 @@ void Game::onePGameLoop(std::shared_ptr<Player> pPlayer, std::shared_ptr<Level> 
 			break;
 		}
 
-		if(timeAcc > dT)
+		if (timeAcc > dT)
 		{
 			timeAcc -= dT;
 
