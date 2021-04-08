@@ -76,6 +76,8 @@ private:
 	struct TextLine : Button
 	{
 		void addSymbol(sf::Uint32 c);
+	private:
+		bool initialMsgActive = true;
 	};
 	
 	void setButtonTextPosition(Button* pButtton);
