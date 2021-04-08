@@ -27,7 +27,7 @@ public:
 	void setPosition(float x, float y);
 	void setFontSize(unsigned char size);
 	void setTextureCoord(float x, float y);
-	std::string getTextLineStr(std::size_t indx);
+	sf::String getTextLineStr(std::size_t indx);
 	void setButtonsColor(const sf::Color& color);
 	void createButtons(std::size_t buttonsNumber);
 	void createTextLines(std::size_t linesNumber);

@@ -52,7 +52,7 @@ public:
 	~IO();
 
 	void start();
-	std::string getGameName() const;
+	sf::String getGameName() const;
 
 	void clearWindow()                             { pWindow->clear(); }
 	void display()                                 { pWindow->display(); }

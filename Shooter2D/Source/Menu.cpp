@@ -308,7 +308,7 @@ void Menu::setTextLineStr(std::size_t indx, const std::string& text)
 	}
 }
 
-std::string Menu::getTextLineStr(std::size_t indx)
+sf::String Menu::getTextLineStr(std::size_t indx)
 {
 	if (buttons.empty()) return "";
 
@@ -318,7 +318,7 @@ std::string Menu::getTextLineStr(std::size_t indx)
 		return pTextLine->pText->getString();
 	}
 
-	return "";
+	return {};
 }
 
 void Menu::createConstTextLines(std::size_t linesNumber)

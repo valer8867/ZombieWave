@@ -150,7 +150,7 @@ void IO::stopGame()
 	killGameThread(std::move(gameThread));
 }
 
-std::string IO::getGameName() const
+sf::String IO::getGameName() const
 {
 	return SAVE_GAME_SCENE_PTR(scenes) ? SAVE_GAME_SCENE_PTR(scenes)->getTextLineStr(0) : "";
 }
