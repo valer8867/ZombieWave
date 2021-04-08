@@ -30,6 +30,7 @@ IO::~IO()
 
 void IO::start()
 {
+	pWindow->setFramerateLimit(60);
 	while (pWindow->isOpen() && !exit)
 	{
 		sf::Event event;

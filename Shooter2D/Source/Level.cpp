@@ -7,6 +7,8 @@
 #include <algorithm>
 #include <random>
 
+extern bool STRESS_TEST;
+
 Level::Level(IO* io_, std::shared_ptr<GameInfo> pGi)
 	: pEnemies(new std::list<Enemy*>, &Level::enemiesDeleter),
 	  pEnemiesFactory(std::make_unique<EnemiesFactory>()),
@@ -103,49 +105,58 @@ void Level::generateEnemies()
 {
 // #define STRESS_TEST 
 // for stress testing
-#ifdef STRESS_TEST
-	constexpr uint8_t numberOfEnemies = 100;
+	if (STRESS_TEST) {
+		constexpr uint8_t numberOfEnemies = 10;
+		pEnemiesFactory->increseAllowedEnemiesTypes();
+		pEnemiesFactory->increseAllowedEnemiesTypes();
+		pEnemiesFactory->increseAllowedEnemiesTypes();
+		pWave->generationDelay = 200;
+		if (pWave->clock.getElapsedTime().asMilliseconds() >= pWave->generationDelay)
+		{
+			for (int i = 0; i < numberOfEnemies; i++)
+			{
+				pEnemies->emplace_back(pEnemiesFactory->createEnemy());
+				pWave->clock.restart();
+			}
 
-	if (pWave->clock.getElapsedTime().asMilliseconds() >= pWave->generationDelay)
-	{
-		for (int i = 0; i < numberOfEnemies; i++)
+			pWave->currentEnemiesCount += numberOfEnemies;
+		}
+	}
+	else {
+
+		if (pWave->enemiesKilled == pWave->waveOverallEnemiesCount)
+		{
+			if (!(++pWave->wave % 5))
+			{
+				pWave->minEnemiesCount += 3;
+				pEnemiesFactory->increseAllowedEnemiesTypes();
+			}
+
+			pWave->enemiesKilled = 0;
+			pWave->waveOverallEnemiesCount += pWave->wave;
+			pGameInfo->incWave();
+
+			pWave->generationDelay -= pWave->generationDelay / 10;
+			if (pWave->generationDelay < pWave->GenerationDelayLimit)
+			{
+				pWave->generationDelay = pWave->GenerationDelayLimit;
+			}
+		}
+
+		if (pWave->wave == 13) {
+			pWave->minEnemiesCount += 5;
+		}
+
+		if ((pWave->clock.getElapsedTime().asMilliseconds() >= pWave->generationDelay &&
+			pWave->currentEnemiesCount + pWave->enemiesKilled < pWave->waveOverallEnemiesCount) ||
+			(pWave->currentEnemiesCount < pWave->minEnemiesCount &&
+				pWave->waveOverallEnemiesCount - pWave->enemiesKilled - pWave->currentEnemiesCount > 0))
 		{
 			pEnemies->emplace_back(pEnemiesFactory->createEnemy());
+			pWave->currentEnemiesCount++;
 			pWave->clock.restart();
 		}
-
-		pWave->currentEnemiesCount += numberOfEnemies;
 	}
-#else
-	if (pWave->enemiesKilled == pWave->waveOverallEnemiesCount)
-	{
-		if (!(++pWave->wave % 5))
-		{
-			pWave->minEnemiesCount++;
-			pEnemiesFactory->increseAllowedEnemiesTypes();
-		}
-
-		pWave->enemiesKilled = 0;
-		pWave->waveOverallEnemiesCount++;
-		pGameInfo->incWave();
-
-		pWave->generationDelay -= pWave->GenerationDelayDec;
-		if (pWave->generationDelay < pWave->GenerationDelayLimit)
-		{
-			pWave->generationDelay = pWave->GenerationDelayLimit;
-		}
-	}
-	
-	if ((pWave->clock.getElapsedTime().asMilliseconds() >= pWave->generationDelay &&
-		pWave->currentEnemiesCount + pWave->enemiesKilled < pWave->waveOverallEnemiesCount) ||
-		(pWave->currentEnemiesCount < pWave->minEnemiesCount &&
-	    pWave->waveOverallEnemiesCount - pWave->enemiesKilled - pWave->currentEnemiesCount > 0))
-	{
-		pEnemies->emplace_back(pEnemiesFactory->createEnemy());
-		pWave->currentEnemiesCount++;
-		pWave->clock.restart();
-	}
-#endif
 }
 
 void Level::createHitEffect(Shot* pShot)
@@ -226,7 +237,8 @@ unsigned char Level::EnemiesFactory::getRandomEnemyType()
 {
 	std::random_device rd;
 	std::mt19937 generator(rd());
-	std::uniform_int_distribution<std::mt19937::result_type> dist(0, enemiesTypesAllowed);
+	//std::uniform_int_distribution<std::mt19937::result_type> dist(0, enemiesTypesAllowed);
+	std::geometric_distribution<> gd(0.63f);
 
-	return dist(generator);
+	return gd(generator) % (enemiesTypesAllowed + 1);
 }

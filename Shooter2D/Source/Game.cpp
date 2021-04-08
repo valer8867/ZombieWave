@@ -192,7 +192,7 @@ void Game::twoPGameLoop(std::shared_ptr<Player> pFirstPlayer, std::shared_ptr<Pl
 			pLevel->addShot(pSecondPlayer->getShotPosition(), pSecondPlayer.get(), pSecondPlayer->damage());
 		}
 
-		if (!pLevel->update(elapsedTime))
+		if (!pLevel->update(elapsedTime * 2))
 		{
 			break;
 		}
